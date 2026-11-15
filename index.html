@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXORA AI — Искусственный интеллект</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#090d18;
+ color:white;
+ min-height:100vh;
+ display:flex;
+}
+.sidebar{
+ width:260px;
+ background:#101727;
+ padding:22px;
+ border-right:1px solid #263149;
+ display:flex;
+ flex-direction:column;
+}
+.logo{font-size:25px;font-weight:bold;color:#69a7ff}
+.new{
+ margin-top:35px;
+ padding:14px;
+ background:#253c63;
+ border:0;
+ border-radius:12px;
+ color:white;
+ cursor:pointer;
+ font-size:15px;
+}
+.side-text{color:#8291a9;margin-top:30px;font-size:13px}
+.main{
+ flex:1;
+ display:flex;
+ flex-direction:column;
+ min-width:0;
+}
+header{
+ padding:22px 30px;
+ border-bottom:1px solid #263149;
+ font-size:17px;
+}
+header span{color:#69a7ff}
+.chat{
+ flex:1;
+ width:100%;
+ max-width:850px;
+ margin:auto;
+ padding:35px 22px;
+ display:flex;
+ flex-direction:column;
+}
+.welcome{text-align:center;margin:auto 0}
+.welcome h1{font-size:38px}
+.welcome h1 span{color:#69a7ff}
+.welcome p{color:#9aa9c0}
+.suggestions{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+ margin-top:30px;
+}
+.suggestions button{
+ padding:16px;
+ background:#151f32;
+ color:white;
+ border:1px solid #2a3954;
+ border-radius:12px;
+ cursor:pointer;
+ text-align:left;
+}
+.messages{display:flex;flex-direction:column;gap:20px}
+.message{
+ padding:16px 19px;
+ border-radius:15px;
+ line-height:1.6;
+ max-width:90%;
+ white-space:pre-wrap;
+}
+.user{background:#244777;align-self:flex-end}
+.bot{background:#172237;align-self:flex-start}
+.input-area{
+ width:100%;
+ max-width:850px;
+ margin:0 auto;
+ padding:15px 22px 25px;
+}
+.input-box{
+ display:flex;
+ background:#172237;
+ border:1px solid #354563;
+ border-radius:16px;
+ padding:8px;
+ gap:8px;
+}
+input{
+ flex:1;
+ min-width:0;
+ background:transparent;
+ border:0;
+ outline:none;
+ color:white;
+ padding:12px;
+ font-size:16px;
+}
+.send{
+ background:#4389ee;
+ color:white;
+ border:0;
+ border-radius:12px;
+ padding:12px 20px;
+ cursor:pointer;
+}
+.note{text-align:center;color:#718099;font-size:11px;margin-top:12px}
+@media(max-width:650px){
+ .sidebar{width:65px;padding:12px}
+ .logo{font-size:13px;overflow:hidden}
+ .new{font-size:0;padding:12px}
+ .new:after{content:"+";font-size:22px}
+ .side-text{display:none}
+ .welcome h1{font-size:29px}
+ .suggestions{grid-template-columns:1fr}
+ header{padding:18px}
+}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+ <div class="logo">✦ NEXORA</div>
+ <button class="new" onclick="newChat()">＋ Новый чат</button>
+ <div class="side-text">ВАШ ИИ-ПОМОЩНИК</div>
+</aside>
+
+<main class="main">
+<header> NEXORA <span>AI</span> <span style="float:right">● Онлайн-интерфейс</span></header>
+
+<section class="chat">
+ <div class="welcome" id="welcome">
+  <h1>Привет! Я <span>NEXORA AI</span></h1>
+  <p>Твой интеллектуальный помощник. Чем могу помочь?</p>
+  <div class="suggestions">
+   <button onclick="suggest('Напиши мне красивый текст')">✍️ Написать текст</button>
+   <button onclick="suggest('Помоги создать сайт')">💻 Создать сайт</button>
+   <button onclick="suggest('Объясни сложную тему простыми словами')">🧠 Объяснить тему</button>
+   <button onclick="suggest('Придумай новую идею для бизнеса')">🚀 Новые идеи</button>
+  </div>
+ </div>
+ <div class="messages" id="messages"></div>
+</section>
+
+<div class="input-area">
+ <div class="input-box">
+  <input id="question" placeholder="Напиши сообщение NEXORA AI..." onkeydown="if(event.key==='Enter')sendMessage()">
+  <button class="send" onclick="sendMessage()">➤</button>
+ </div>
+ <div class="note">NEXORA AI — твой помощник каждый день</div>
+</div>
+</main>
+
+<script>
+function suggest(text){
+ document.getElementById('question').value=text;
+ sendMessage();
+}
+function newChat(){
+ document.getElementById('messages').innerHTML='';
+ document.getElementById('welcome').style.display='block';
+}
+function sendMessage(){
+ const input=document.getElementById('question');
+ const text=input.value.trim();
+ if(!text)return;
+
+ document.getElementById('welcome').style.display='none';
+ const messages=document.getElementById('messages');
+
+ const user=document.createElement('div');
+ user.className='message user';
+ user.textContent=text;
+ messages.appendChild(user);
+
+ input.value='';
+
+ const bot=document.createElement('div');
+ bot.className='message bot';
+ bot.textContent='Интерфейс NEXORA AI работает! Для настоящих ответов искусственного интеллекта необходимо подключить сервер и AI API.';
+ messages.appendChild(bot);
+}
+</script>
+</body>
+</html>
